@@ -65,7 +65,7 @@ ROOT_URLCONF = 'sor_pricing.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,7 +83,17 @@ WSGI_APPLICATION = 'sor_pricing.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+"""
+FOR LATER USE 
 
+'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': data['NAME'],
+        'USER': data['USER'],
+        'PASSWORD': data['PASSWORD'],
+        'HOST': data['HOST'],
+    }"""
+    
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
