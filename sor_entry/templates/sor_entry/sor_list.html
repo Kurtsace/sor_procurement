@@ -1,0 +1,60 @@
+{% extends 'sor_pricing/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} SOR List {% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>SOR List</h3>
+                <br>
+                <a class="btn btn-primary btn-sm" href="{% url 'sor_entry:create_sor' %}">New SOR</a>
+                <br>
+            </div>
+    
+            <div class="card-body">
+    
+                <table class="table table-striped">
+                    <thead class="thead-dark"> 
+                        <tr>
+                            <th>SOR Code</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Created By</th>
+                            <th>Date Created</th>
+                        </tr>
+                    </thead>
+
+                    {% for sor in sorentry_list %}
+
+                        <tr>
+                            <td><a href="{% url 'sor_entry:sor_detail' pk=sor.pk %}">{{ sor.lsor_code }}</a></td>
+                            <td>{{ sor.lsor_description }}</td>
+                            <td>${{ sor.lsor_price|intcomma }}</td>
+                            <td>{{ sor.user.username|upper }}</td>
+                            <td>{{ sor.date_created }}</td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td>No Entries</td>
+                        </tr>
+                    {% endfor %}
+
+
+                </table>
+    
+            </div>
+    
+        </div>
+
+    </div>
+{% endblock %}

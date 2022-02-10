@@ -17,7 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import HomePage
 
+app_name = 'sor_pricing'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePage.as_view(), name='home'),
+    
+    path('sor_entry/', include('sor_entry.urls', namespace='sor_entry'))
 ]

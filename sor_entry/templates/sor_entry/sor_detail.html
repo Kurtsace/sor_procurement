@@ -1,0 +1,46 @@
+{% extends 'sor_pricing/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} {{ sorentry.sor_code }} {% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>{{ sorentry.lsor_code }}</h3>
+                <a class="btn btn-primary btn-sm" href="{% url 'sor_entry:download_single_csv' pk=sorentry.pk %}">Download as CSV</a>
+                <br>
+            </div>
+    
+            <div class="card-body">
+
+                <table class="table table-striped">
+
+                    {% for value in sorentry.get_key_val_tuple %}
+
+                        <tr>
+                            <td>{{ value.0|upper }}</td>
+                            <td>{{ value.1 }}</td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td>No Entries</td>
+                        </tr>
+                    {% endfor %}
+                    
+                </table>
+
+            </div>
+    
+        </div>
+
+    </div>
+{% endblock %}

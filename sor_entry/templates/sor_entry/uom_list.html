@@ -1,0 +1,55 @@
+{% extends 'sor_pricing/base.html' %}
+{% load static %}
+
+{% block title %} UOM List {% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>UOM Codes</h3>
+                <br>
+                <a class="btn btn-primary btn-sm" href="{% url 'sor_entry:create_uom' %}">New UOM</a>
+                <br>
+            </div>
+    
+            <div class="card-body">
+    
+                <table class="table table-striped">
+                    <thead class="thead-dark"> 
+                        <tr>
+                            <th>UOM Code</th>
+                            <th>Created By</th>
+                            <th>Date Created</th>
+                        </tr>
+                    </thead>
+
+                    {% for uom in uomcode_list %}
+
+                        <tr>
+                            <td>{{ uom.lsor_hrv_uom_code }}</td>
+                            <td>{{ uom.user.user_id }}</td>
+                            <td>{{ uom.date_created }}</td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td>No Entries</td>
+                        </tr>
+                    {% endfor %}
+
+
+                </table>
+    
+            </div>
+    
+        </div>
+
+    </div>
+{% endblock %}
