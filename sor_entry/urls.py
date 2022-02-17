@@ -20,5 +20,9 @@ urlpatterns = [
     path('new_pri/', CreatePRI.as_view(), name='create_pri'),
     path('pri_list/', PRIList.as_view(), name='pri_list'),
     
-    path('get_single_csv/<int:pk>/', DownloadCSVSingle.as_view(), name="download_single_csv"),
+    path('get_single_csv/<int:pk>/', DownloadCSVSingle.as_view(), name='download_single_csv'),
+    path('get_csv_order/', DownloadCSVOrder.as_view(), name='download_csv_order'),
+    path('get_csv_date/<str:date_created>', DownloadCSVDate.as_view(), name='download_csv_date'),
+    path('update_item/',UpdateCreateCSVOrder.as_view(), name='update_csv_order'),
+    path('csv_orders/', CSVOrderDetail.as_view(), name='csv_order_detail')
 ]

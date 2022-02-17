@@ -1,21 +1,6 @@
-#navbar-menu{
-    background-color: white
-}
 
-#navbar-menu .nav-item .nav-link{
-    color: black;
+.nav-link{
     font-weight: bold;
-}
-
-#navbar-menu .nav-link:hover{
-    color: lightblue;
-}
-
-.navbar-brand{
-    color: black;
-    font-weight: bold;
-}
-
-.navbar-brand:hover{
-    color: lightblue;
+    font-size: large;
+    color: white;
 }

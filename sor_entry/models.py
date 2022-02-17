@@ -88,6 +88,7 @@ class PRICode(models.Model):
         return self.lsor_pri_code
 
 
+
 # Sor entry models
 class SOREntry(models.Model):
     
@@ -185,7 +186,7 @@ class SOREntry(models.Model):
         values = []
         
         # Build the list 
-        for field in self._meta.get_fields()[1:-2]:
+        for field in self._meta.get_fields()[2:-2]:
             
             value = getattr(self, field.name)
             
@@ -209,7 +210,7 @@ class SOREntry(models.Model):
     # Return the field,value tuple 
     def get_key_val_tuple(self):
         
-        fields = [ field.name for field in self._meta.get_fields() ][1:-2]
+        fields = [ field.name for field in self._meta.get_fields() ][2:-2]
         values = self.get_field_values_list()
         
         return zip(fields, values)
@@ -217,3 +218,11 @@ class SOREntry(models.Model):
     # STR representation
     def __str__(self):
         return self.lsor_code
+    
+    
+# SOR CSV Download Order
+class SORCSVOrder(models.Model):
+    
+    sor_entries = models.ManyToManyField(SOREntry)
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)

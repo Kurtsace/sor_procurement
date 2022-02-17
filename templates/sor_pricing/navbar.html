@@ -1,29 +1,25 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'sor_pricing/css/navbar.css' %}">
+<div class="px-3 py-2 bg-dark text-white border-bottom">
+    <div class="container">
 
-<nav class="navbar navbar-expand-lg" id='navbar-menu'>
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
-    <a class='navbar-brand' href="{% url 'home' %}" id='brand'>ITS</a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a class="nav-link px-2" href="{% url 'home' %}">ITS</a></li>
+                <li><a class="nav-link px-2" href="{% url 'home' %}">HOME</a></li>
+            </ul>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id='navbarSupportedContent'>
-
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="">Home</a>
-            </li>
-        </ul>
-
-        <ul class='navbar-nav ml-auto'>
-            {% if user.is_authenticated %}
+            <ul class="nav col-12 col-lg-auto text-end">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sor_entry:csv_order_detail' %}">Order</a>
+                </li>
+    
                 <li class="nav-item">
                     <p class="nav-link disabled" id='welcome-link'>Welcome {{user.username}}</p>
                 </li>
-
+    
                 <li class="nav-item">
                     <a class="nav-link" href="" id='logout-link'>Log Out</a>
                 </li>
@@ -32,8 +28,8 @@
                     <a class="nav-link" href="">Log In</a>
                 </li>
             {% endif %}
-        </ul>
+            </ul>
+        </div>
 
     </div>
-
-</nav>  
+</div>

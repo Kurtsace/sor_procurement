@@ -1,0 +1,64 @@
+{% extends 'sor_pricing/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>{{ title }}</h3>
+                <a class="btn btn-primary btn-sm" href="{% url 'sor_entry:sor_list' %}">SOR List</a>
+            </div>
+    
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark"> 
+                        <tr>
+                            <th>SOR Code</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+
+                    {% for sor in sor_orders %}
+
+                        <tr>
+                            <td><a href="{% url 'sor_entry:sor_detail' pk=sor.pk %}">{{ sor.lsor_code }}</a></td>
+                            <td>{{ sor.lsor_description }}</td>
+                            <td>${{ sor.lsor_price|intcomma }}</td>
+                            <td><button data-sor="{{ sor.pk }}" data-action="remove" class="btn btn-danger btn-sm update-csv-queue">Remove</button></td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td>No Orders</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="card-footer">
+
+                {% if sor_orders %}
+                    <a class="btn btn-primary btn-sm" href="{% url 'sor_entry:download_csv_order' %}">Download CSV</a>
+                    <a id="clear-btn" class="btn btn-danger btn-sm">Clear</a>
+                {% endif %} 
+            </div>
+    
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'sor_pricing/js/clear_cart.js' %}"></script>
+{% endblock %}
