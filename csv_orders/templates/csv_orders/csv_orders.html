@@ -1,0 +1,110 @@
+{% extends 'sor_pricing/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>SOR Orders</h3>
+                <a class="btn btn-primary btn-sm" href="{% url 'sor_entry:sor_list' %}">SOR List</a>
+            </div>
+    
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark"> 
+                        <tr>
+                            <th>SOR Code</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+
+                    {% for sor in sor_orders %}
+
+                        <tr>
+                            <td><a href="{% url 'sor_entry:sor_detail' pk=sor.pk %}">{{ sor.lsor_code }}</a></td>
+                            <td>{{ sor.lsor_description }}</td>
+                            <td>${{ sor.lsor_price|intcomma }}</td>
+                            <td><button data-id="{{ sor.pk }}" data-action="remove" data-type="sor" class="btn btn-danger btn-sm update-csv-queue">Remove</button></td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td>No Orders</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="card-footer">
+
+                {% if sor_orders %}
+                    <a class="btn btn-primary btn-sm" href="{% url 'csv_orders:download_order' item_type='sor' %}">Download CSV</a>
+                    <a data-action="remove-all" data-type="sor" class="btn btn-danger btn-sm clear-btn">Clear</a>
+                {% endif %} 
+            </div>
+    
+        </div>
+
+        <hr>
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>CSP Orders</h3>
+                <a class="btn btn-primary btn-sm" href="{% url 'contractor_site_prices:csp_list' %}">CSP List</a>
+            </div>
+    
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark"> 
+                        <tr>
+                            <th>Name</th>
+                            <th>Created By</th>
+                            <th>Date Created</th>
+                        </tr>
+                    </thead>
+
+                    {% for csp in csp_orders %}
+
+                        <tr>
+                            <td><a href="{% url 'contractor_site_prices:csp_detail' pk=csp.pk %}">{{ csp }}</a></td>
+                            <td>{{ csp.user }}</td>
+                            <td>{{ csp.date_created }}</td>
+                            <td><button data-id="{{ csp.pk }}" data-action="remove" data-type="csp" class="btn btn-danger btn-sm update-csv-queue">Remove</button></td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td>No Orders</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="card-footer">
+
+                {% if csp_orders %}
+                    <a class="btn btn-primary btn-sm" href="{% url 'csv_orders:download_order' item_type='csp' %}">Download CSV</a>
+                    <a data-action="remove-all" data-type="csp" class="btn btn-danger btn-sm clear-btn">Clear</a>
+                {% endif %} 
+            </div>
+    
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'sor_pricing/js/clear_cart.js' %}"></script>
+{% endblock %}

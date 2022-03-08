@@ -1,0 +1,56 @@
+{% extends 'sor_pricing/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} {{ contractorsiteprice }} {% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>{{ contractorsiteprice }}</h3>
+                <hr>
+                <a class="btn btn-primary" href="{% url 'contractor_site_prices:get_single_csv' pk=contractorsiteprice.pk %}">Download CSV</a>
+            </div>
+    
+            <div class="card-body">
+
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Policy Code</th>
+                            <th>Work Programme</th>
+                            <th>Policy Start Date</th>
+                            <th>Contractor Site Code</th>
+                            <th>Contract Start Date</th>
+                            <th>Contract End Date</th>
+                            <th>SOR Code</th>
+                            <th>Price ($)</th>
+                            <th>Preferred Ind</th>
+                        </tr>
+                    </thead>
+
+                    {% for line in contractorsiteprice.get_csv_table_list %}
+                    <tr>
+                        {% for entry in line %}
+                        <td>{{ entry }}</td>
+                        {% endfor %}
+                    </tr>
+                        
+                    {% empty %}
+                        <h4>Something has gone wrong</h4>
+                    {% endfor %}
+                </table>
+
+            </div>
+    
+        </div>
+
+    </div>
+{% endblock %}

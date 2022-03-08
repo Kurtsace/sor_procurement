@@ -54,7 +54,7 @@
                             <td>${{ sor.lsor_price|intcomma }}</td>
                             <td>{{ sor.user.username|upper }}</td>
                             <td>{{ sor.date_created }}</td>
-                            <td><button data-sor="{{ sor.pk }}" data-action="add" class="btn btn-primary btn-sm update-csv-queue" href="">Add</button></td>
+                            <td><button data-id="{{ sor.pk }}" data-action="add" data-type="sor" class="btn btn-primary btn-sm update-csv-queue" href="">Add</button></td>
                         </tr>
 
                     {% empty %}

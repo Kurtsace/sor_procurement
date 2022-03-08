@@ -35,6 +35,22 @@
 
         <div class="card">
             <div class="card-header">
+                <h3><a href="{% url 'contractor_site_prices:csp_list' %}">Contractor Site Prices</a></h3>
+            </div>
+
+            <div class="card-body">
+                <p class="card-text">View all Contractor Site Prices</p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    {% if user.is_staff %}
+    <div class="container" id="navigation-cards">
+
+        <div class="card">
+            <div class="card-header">
                 <h3><a href="{% url 'sor_entry:uom_list' %}">UOM List</a></h3>
             </div>
 
@@ -88,4 +104,5 @@
             </div>
         </div>
     </div>
+    {% endif %}
 {% endblock %}

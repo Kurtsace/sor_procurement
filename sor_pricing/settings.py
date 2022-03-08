@@ -46,7 +46,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     
+    'accounts',
     'sor_entry',
+    'pricing_policy_entry',
+    'contractor_site_prices',
+    'csv_orders',
     
     'crispy_forms',
     'bootstrap5',
@@ -59,6 +63,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'login_required.middleware.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -155,3 +160,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Crispy forms 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#Login redirect 
+LOGIN_REDIRECT_URL = '/'
+
+LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [
+    'accounts:login',
+    'accounts:register',
+]

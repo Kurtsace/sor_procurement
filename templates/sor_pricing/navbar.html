@@ -13,7 +13,7 @@
             <ul class="nav col-12 col-lg-auto text-end">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'sor_entry:csv_order_detail' %}">Order</a>
+                    <a class="nav-link" href="{% url 'csv_orders:orders' %}">Order</a>
                 </li>
     
                 <li class="nav-item">
@@ -21,11 +21,11 @@
                 </li>
     
                 <li class="nav-item">
-                    <a class="nav-link" href="" id='logout-link'>Log Out</a>
+                    <a class="nav-link" href="{% url 'accounts:logout' %}" id='logout-link'>Log Out</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="">Log In</a>
+                    <a class="nav-link" href="{% url 'accounts:login' %}">Log In</a>
                 </li>
             {% endif %}
             </ul>

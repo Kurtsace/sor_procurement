@@ -231,29 +231,6 @@ class DownloadCSVSingle(generic.View):
         
         return response
 
-# Download SOR entries added to the "cart" as a csv/dat
-class DownloadCSVOrder(generic.View):
-    
-    def get(self, *args, **kwargs):
-        
-        # Get the queried object
-        obj = SORCSVOrder.objects.get(user=self.request.user)
-        
-        # Create response 
-        response = HttpResponse(
-            content_type='text/csv',
-            headers={
-                'Content-Disposition': 'attachment; filename="{}.DAT"'.format("SOR_CSV")
-            }
-        )
-        
-        # Write the CSV file
-        writer = csv.writer(response, quoting=csv.QUOTE_ALL)
-        for sor in obj.sor_entries.all():
-            writer.writerow(sor.get_field_values_list())        
-                
-        return response
-
 # Download SOR entries with a specific date as a csv
 class DownloadCSVDate(generic.View):
     
@@ -281,61 +258,3 @@ class DownloadCSVDate(generic.View):
             writer.writerow(sor.get_field_values_list())
             
         return response
-
-# Create an order list of SOR entries that need to be turned into a CSV
-class UpdateCreateCSVOrder(generic.View):
-    
-    def post(self, *args, **kwargs):
-        
-        data = json.loads(self.request.body)
-        sor_id = data['sor_id']
-        action = data['action']
-        
-        # Get the user and sor object
-        user = self.request.user
-        sor = SOREntry.objects.get(id=sor_id)
-        
-        # Get or create an SORCSVOrder download entry
-        sor_order, complete = SORCSVOrder.objects.get_or_create(user=user)
-        
-        # Add the sor object or delete based on action 
-        if action == "add":
-            sor_order.sor_entries.add(sor)
-        else:
-            sor_order.sor_entries.remove(sor)
-        sor_order.save()
-        
-        return_data = [ sor.lsor_code for sor in sor_order.sor_entries.all()]
-        
-        # Delete SORCSVOrder if there are no sor items in it 
-        if sor_order.sor_entries.count() <= 0:
-            sor_order.delete()
-        
-        
-        return JsonResponse(return_data, safe=False)
-    
-
-# "Cart" like page for viewing csv orders
-class CSVOrderDetail(generic.DetailView):
-    
-    template_name = 'sor_entry/sor_csv_orders.html'
-    
-    def get_object(self):
-        
-        # Get all the sor orders
-        try:
-            query = SORCSVOrder.objects.get(user=self.request.user).sor_entries.all()
-        except:
-            query = None
-            
-        return query
-    
-    # Extra context data 
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        
-        # Add context
-        context['title'] = "Order CSV"
-        context['sor_orders'] = self.get_object()
-        return context

@@ -22,6 +22,9 @@ app_name = 'sor_pricing'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePage.as_view(), name='home'),
-    
-    path('sor_entry/', include('sor_entry.urls', namespace='sor_entry'))
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('sor_entry/', include('sor_entry.urls', namespace='sor_entry')),
+    path('pricing_policy/', include('pricing_policy_entry.urls', namespace='pricing_policy_entry')),
+    path('contractor_site_prices/', include('contractor_site_prices.urls', namespace='contractor_site_prices')),
+    path('csv_orders/', include('csv_orders.urls', namespace='csv_orders'))
 ]

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+
 from csv import reader 
 from datetime import datetime
 
@@ -67,7 +68,6 @@ class LOCCode(models.Model):
         return self.lsor_hrv_loc_code
     
 
-
 # Priority code 
 # LSOR_PRI_CODE
 class PRICode(models.Model):
@@ -99,7 +99,7 @@ class SOREntry(models.Model):
     
     lsor_description = models.TextField(max_length=4000, blank=False, null=False, verbose_name="LSOR_DESCRIPTION")
     
-    lsor_start_date = models.DateField(default="2016-05-16", verbose_name="LSOR_START_DATE")
+    lsor_start_date = models.DateField(default="2016-05-12", verbose_name="LSOR_START_DATE")
     
     lsor_current_ind = models.CharField(max_length=1, default="Y", verbose_name="LSOR_CURRENT_IND")
     
@@ -137,9 +137,9 @@ class SOREntry(models.Model):
     
     lsor_liability_type_ind = models.CharField(max_length=1, null=False, blank=False, default="O", verbose_name="LSOR_LIABILITY_TYPE_IND")
     
-    lsor_price = models.DecimalField(max_digits=11, decimal_places=2, null=False, blank=False, verbose_name="LSOR_PRICE")
+    lsor_price = models.DecimalField(max_digits=8, decimal_places=2, null=False, blank=False, verbose_name="LSOR_PRICE")
     
-    lsor_price_start_date = models.DateField(default="2016-05-16", verbose_name="LSOR_PRICE_START_DATE")
+    lsor_price_start_date = models.DateField(default="2016-05-12", verbose_name="LSOR_PRICE_START_DATE")
     
     lsor_price_end_date = models.DateField(blank=True, null=True, verbose_name="LSOR_PRICE_END_DATE")
     
@@ -186,7 +186,7 @@ class SOREntry(models.Model):
         values = []
         
         # Build the list 
-        for field in self._meta.get_fields()[2:-2]:
+        for field in self._meta.get_fields()[3:-2]:
             
             value = getattr(self, field.name)
             
@@ -207,10 +207,10 @@ class SOREntry(models.Model):
     def get_csv_row(self):
         return ','.join([ '"{}"'.format(val) for val in self.get_field_values_list() ])
     
-    # Return the field,value tuple 
+    # Return the field,value tuple list
     def get_key_val_tuple(self):
         
-        fields = [ field.name for field in self._meta.get_fields() ][2:-2]
+        fields = [ field.name for field in self._meta.get_fields() ][3:-2]
         values = self.get_field_values_list()
         
         return zip(fields, values)
@@ -219,10 +219,3 @@ class SOREntry(models.Model):
     def __str__(self):
         return self.lsor_code
     
-    
-# SOR CSV Download Order
-class SORCSVOrder(models.Model):
-    
-    sor_entries = models.ManyToManyField(SOREntry)
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)

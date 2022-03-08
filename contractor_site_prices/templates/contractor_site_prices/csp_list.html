@@ -1,0 +1,58 @@
+{% extends 'sor_pricing/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %} Contractor Site Prices {% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h3>Contractor Site Prices</h3>
+                <hr>
+                <a class="btn btn-primary" href="{% url 'contractor_site_prices:create_csp' %}">New CSP</a>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark"> 
+                        <tr>
+                            <th>Name</th>
+                            <th>Contractor</th>
+                            <th>Price</th>
+                            <th>Created By</th>
+                            <th>Date Created</th>
+                        </tr>
+                    </thead>
+
+                    {% for csp in contractorsiteprice_list %}
+
+                        <tr>
+                            <td><a href="{% url 'contractor_site_prices:csp_detail' pk=csp.pk %}">{{ csp }}</a></td>
+                            <td>{{ csp.lcspg_ppc_cos_code }}</td>
+                            <td>${{ csp.lcsp_price|intcomma }}</td>
+                            <td>{{ csp.user.username|upper }}</td>
+                            <td>{{ csp.date_created }}</td>
+                            <td><button data-id="{{ csp.pk }}" data-action="add" data-type="csp" class="btn btn-primary btn-sm update-csv-queue" href="">Add</button></td>
+                        </tr>
+
+                    {% empty %}
+                        <tr>
+                            <td>No Entries</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+    
+            </div>
+    
+        </div>
+
+    </div>
+{% endblock %}
