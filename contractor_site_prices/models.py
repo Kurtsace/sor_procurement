@@ -11,8 +11,6 @@ class PolicyCode(models.Model):
     
     lppc_ppp_ppg_code = models.CharField(max_length=10, unique=True, blank=False, null=False, verbose_name="Pricing Policy Group Code")
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
     date_created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -23,8 +21,6 @@ class PolicyCode(models.Model):
 class WorkProgramme(models.Model):
     
     lppc_ppp_wpr_code = models.CharField(max_length=10, unique=True, blank=False, null=False, verbose_name="Work Programme")
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     date_created = models.DateTimeField(auto_now_add=True)
     
@@ -53,7 +49,7 @@ class ContractorSitePrice(models.Model):
     lcsp_preferred_ind = models.CharField(max_length=1, blank=False, null=False, default="N", verbose_name="Preferred Ind")
     
     ##########################
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=False, null=True)
     
     date_created = models.DateTimeField(auto_now_add=True)
     

@@ -28,6 +28,13 @@ class CreateSOR(generic.CreateView):
     # Form
     form_class = SORForm 
     
+    # Override form valid to add user 
+    def form_valid(self, form):
+        
+        form.instance.user = self.request.user
+        
+        return super(CreateSOR, self).form_valid(form)
+    
     # Extra context data 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

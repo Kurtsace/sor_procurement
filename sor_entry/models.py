@@ -14,8 +14,6 @@ class UOMCode(models.Model):
     # Fields 
     lsor_hrv_uom_code = models.CharField(max_length=10, blank=False, null=False, unique=True, verbose_name="LSOR_HRV_UOM_CODE")
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True) 
-    
     date_created = models.DateTimeField(auto_now_add=True)
     
     # Redirect
@@ -34,8 +32,6 @@ class TRDCode(models.Model):
     
     # Fields 
     lsor_hrv_trd_code = models.CharField(max_length=10, blank=False, null=False, unique=True, verbose_name="LSOR_HRV_TRD_CODE")
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True) 
     
     date_created = models.DateTimeField(auto_now_add=True)
     
@@ -55,8 +51,6 @@ class LOCCode(models.Model):
     # Fields 
     lsor_hrv_loc_code = models.CharField(max_length=10, blank=False, null=False, unique=True, verbose_name="LSOR_HRV_LOC_CODE")
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True) 
-    
     date_created = models.DateTimeField(auto_now_add=True)
     
     # Redirect
@@ -74,8 +68,6 @@ class PRICode(models.Model):
     
     # Fields 
     lsor_pri_code = models.CharField(max_length=3, blank=False, null=False, unique=True, verbose_name="LSOR_PRI_CODE")
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True) 
     
     date_created = models.DateTimeField(auto_now_add=True)
     
@@ -171,7 +163,7 @@ class SOREntry(models.Model):
     
     
     ##########################
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=False, null=True)
     
     date_created = models.DateTimeField(auto_now_add=True)
     
